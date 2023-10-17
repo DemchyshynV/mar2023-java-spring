@@ -3,6 +3,8 @@ package com.example.mar2023spring.controllers;
 import com.example.mar2023spring.dto.CarDto;
 import com.example.mar2023spring.models.Car;
 import com.example.mar2023spring.services.CarService;
+import com.example.mar2023spring.view.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ public class CarController {
 
     private final CarService carService;
 
+    @JsonView(View.Level3.class)
     @GetMapping
     public ResponseEntity<List<CarDto>> getAll() {
         return ResponseEntity.ok(this.carService.getAll());
@@ -28,6 +31,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.carService.create(car));
     }
 
+    @JsonView(View.Level1.class)
     @GetMapping("/{id}")
     public ResponseEntity<CarDto> getById(@PathVariable int id) {
         return ResponseEntity.of(this.carService.getById(id));
@@ -39,11 +43,13 @@ public class CarController {
         this.carService.deleteById(id);
     }
 
+    @JsonView(View.Level2.class)
     @GetMapping("/power/{value}")
     public ResponseEntity<List<CarDto>> getByPower(@PathVariable int value) {
         return ResponseEntity.ok(this.carService.getByPower(value));
     }
 
+    @JsonView(View.Level2.class)
     @GetMapping("/producer/{value}")
     public ResponseEntity<List<CarDto>> getByProducer(@PathVariable String value) {
         return ResponseEntity.ok(this.carService.getByProducer(value));

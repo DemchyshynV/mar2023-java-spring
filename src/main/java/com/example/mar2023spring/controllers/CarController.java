@@ -22,7 +22,7 @@ public class CarController {
 
     private final CarService carService;
 
-    @JsonView(View.Level3.class)
+    @JsonView(View.Level1.class)
     @GetMapping
     public ResponseEntity<List<CarDto>> getAll() {
         return ResponseEntity.ok(this.carService.getAll());
